@@ -57,7 +57,7 @@ exports.createUser = async (req,res) =>{
                         sanitizeUser(doc),
                         process.env.JWT_SECRET_KEY
                        );
-                       console.log(token);
+                    //    console.log(token);
                        res
                         .cookie('jwt', token, {
                             expires: new Date(Date.now() + 7200000),
@@ -102,15 +102,16 @@ exports.checkAuth = async (req,res) =>{
 
 exports.resetPasswordRequest = async (req,res) =>{
     const email = req.body.email;
+    // console.log(req.body);
 
     const user = await User.findOne({email: email});
-
+    // console.log(user);
     if(user){
         const token = crypto.randomBytes(48).toString('hex');
         user.resetPasswordToken = token;
         await user.save();
 
-        const resetPageLink = `http://localhost:5173/reset-password?token=${token}&email=${email}`;
+        const resetPageLink = `https://shopkart-lac.vercel.app/reset-password?token=${token}&email=${email}`;
         
         const subject = 'reset password for shopkart';
         const html = `<p>click <a href='${resetPageLink}'> here </a> to Reset Password</p>`;
@@ -120,10 +121,12 @@ exports.resetPasswordRequest = async (req,res) =>{
             res.json(response);
         }
         else {
+
             res.sendStatus(400);
         }
     }
     else{
+
         res.sendStatus(400);
     }
 }
