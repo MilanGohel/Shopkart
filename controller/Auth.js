@@ -12,27 +12,10 @@ exports.loginUser = async (req,res) =>{
         .cookie('jwt',user.token,{
             expires: new Date(Date.now() + 7200000),
             httpOnly: true,
+            secure: true
         })
         .status(201)
-        .json({id: user.id, role: user.role});
-    // try{
-        
-    //     const user = await User.findOne({email: req.body.email});
-    //     // console.log(user);
-       
-    //     if(!user){
-    //         res.status(401).json({message: "no such email address."});
-    //     }
-    //     else if(user.password === req.body.password ){
-    //         res.status(200).json(user);
-    //     }
-    //     else{
-    //         res.status(401).json({message: 'Invalid Credentials.'});
-    //     }
-    // }
-    // catch(error){
-    //     res.status(400).json(error);
-    // }
+        .json({id: user.id, role: user.role})
 }
 
 exports.createUser = async (req,res) =>{
@@ -61,7 +44,8 @@ exports.createUser = async (req,res) =>{
                        res
                         .cookie('jwt', token, {
                             expires: new Date(Date.now() + 7200000),
-                            httpOnly: true
+                            httpOnly: true,
+                            secure: true
                         })
                         .status(201)
                         .json({id: doc.id, role: doc.role})
@@ -82,6 +66,7 @@ exports.logout = async (req,res) =>{
        res.cookie('jwt', null, {
         expires: new Date(Date.now()),
         httpOnly: true,
+        secure: true
        }) 
        .sendStatus(200)
     }

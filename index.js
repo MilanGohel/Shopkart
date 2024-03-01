@@ -37,7 +37,7 @@ server.use((
         saveUninitialized: false,
     })
 ));
-server.use(passport.authenticate('session'));
+// server.use(passport.authenticate('session'));
 server.use(cors({
     exposedHeaders: ['X-Total-Count']
 }))
@@ -67,7 +67,7 @@ passport.use(
         email,password, done
     ){
         try{
-            const user = await User.findOne({email})
+            const user = await User.findOne({email});
             if(!user){
                 return done(null, false, {message: 'invalid credentials'});
             }
@@ -81,7 +81,9 @@ passport.use(
                 async function(err, hashedPass){
                     
                     if(!crypto.timingSafeEqual(user.password, hashedPass)){
-                        return done(null, false, {message: 'invalid credentials'})
+                        // console.log("invalid credential")
+                        return done(null, false,{message: "Invalid Credentials!"})
+                        // return done(null, false)
                     }
 
                     const token = jwt.sign(

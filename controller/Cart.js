@@ -1,6 +1,5 @@
 const {Cart} = require('../models/Cart')
 exports.addToCart = async (req,res) =>{
-    // TODO: Remove userid from front-end
     const {id} = req.user;
     const cart = new Cart({...req.body, user: id});
     // const product = new Cart(req.body);
