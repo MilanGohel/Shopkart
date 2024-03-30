@@ -23,6 +23,7 @@ exports.updateUser = async (req,res) =>{
     }
 }
 exports.fetchLoggedInUserInfo = async (req,res) =>{
+    // console.log(req.user);
     const {id} = req.user;
     try{
        const user = await User.findById(id);

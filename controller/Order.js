@@ -76,7 +76,7 @@ exports.deleteOrder = async (req,res) =>{
     }
 }
 exports.fetchLoggedInUserOrders = async (req,res) =>{
-    // TODO: 
+
     const {id} = req.user;
     try {
         const orders = await Order.find({user: id}).populate('user');

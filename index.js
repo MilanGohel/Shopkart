@@ -37,7 +37,9 @@ server.use((
         saveUninitialized: false,
     })
 ));
-// server.use(passport.authenticate('session'));
+server.use(passport.authenticate('session'));
+server.use(passport.initialize());
+server.use(passport.session());
 server.use(cors({
     exposedHeaders: ['X-Total-Count']
 }))
