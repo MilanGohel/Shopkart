@@ -18,7 +18,6 @@ const userSchema = new Schema({
     },
     addresses:{
         type: [Schema.Types.Mixed],
-
     },
     salt:{
         type: Buffer

@@ -137,8 +137,9 @@ passport.deserializeUser(function(user, cb) {
 // JWT options
 main().catch(error => console.log(error))
 async function main() {
+    console.log(process.env.MONGODB_URL)
     await mongoose.connect(process.env.MONGODB_URL);
-    console.log("database connected")
+    console.log("database connected");
 }
 server.listen(process.env.PORT, () =>{
     console.log('server listening on '+process.env.PORT);

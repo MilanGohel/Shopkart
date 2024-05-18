@@ -21,6 +21,11 @@ exports.loginUser = async (req,res) =>{
 exports.createUser = async (req,res) =>{
     try{
         const salt = crypto.randomBytes(16);
+        const userFound = await User.find({email: req.body.email}).exec();
+        if(userFound.length > 0){
+            res.status(409).json({"message": "user already exists"});
+            return;
+        }
         crypto.pbkdf2(
             req.body.password,
             salt,
@@ -29,6 +34,7 @@ exports.createUser = async (req,res) =>{
             'sha256',
             async function (err, hashedPass){
                 const user = new User({...req.body, password: hashedPass, salt});
+
                 const doc = await user.save();
 
                 req.login(sanitizeUser(doc), (err) =>{
